@@ -10,7 +10,6 @@ ollama = Ollama(model="mistral:7b")
 
 def answer_with_context(question, context_url):
     # Now let's load a document to ask questions against. 
-    # You might need to install `bs4`.
     loader = WebBaseLoader(context_url)
     data = loader.load()
 
@@ -21,7 +20,6 @@ def answer_with_context(question, context_url):
     # It's split up, but we have to find the relevant splits and then submit those to the model. 
     # We can do this by creating embeddings and storing them in a vector database. 
     # We can use Ollama directly to instantiate an embedding model. 
-    # You might need to install `chromadb`.
     oembed = OllamaEmbeddings(model="nomic-embed-text")
     vectorstore = Chroma.from_documents(documents=all_splits, embedding=oembed)
 
@@ -43,16 +41,17 @@ def answer(question):
 def main():
     if len(sys.argv) < 2:
         print("Please provide a topic as an argument.")
-        print('Usage 1: python ask.py "What is Asial Company?"')
-        print('Usage 2: python ask.py "What is Asial Company?" "https://en.asial.co.jp/about"')
+        print('Usage 1: python ask.py "Who is current President in USA?"')
+        print('Usage 2: python ask.py "Who is current President in USA?" "https://en.wikipedia.org/wiki/President_of_the_United_States"')
 
+    # Get the first command-line argument after the script name
     question = sys.argv[1]
-    context_url = ''
 
-    # Now let's ask a question from the document.
     print("\n\n#### Question ####")
     print(question)
 
+    # If the user provides a second argument, we will use that as the context URL to find the answer.
+    context_url = ''
     if len(sys.argv) == 3:
         context_url = sys.argv[2]
 

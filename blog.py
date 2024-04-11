@@ -7,6 +7,7 @@ ollama_gemma = Ollama(model='gemma:7b')
 ollama_mistral = Ollama(model='mistral:7b')
 
 def write_blog(topic):
+  # Create Researcher agent
   researcher = Agent(
       role='Senior Research Analyst',
       goal=f"Uncover research in {topic}",
@@ -18,6 +19,7 @@ def write_blog(topic):
       llm=ollama_gemma
   )
 
+  # Create Writer agent
   writer = Agent(
       role='Content Strategist',
       goal=f"Craft compelling content on {topic}",
